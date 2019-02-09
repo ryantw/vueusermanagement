@@ -2,6 +2,12 @@
   <div>
     <h1>Users</h1>
     <hr>
+    <p>
+      <router-link
+      class="btn btn-success"
+      :to="{name: 'userNew'}"
+      >Add New User</router-link>
+    </p>
     <div v-if='users.length > 0'>
       <table class='table table-striped table-dark'>
         <thead>
@@ -49,10 +55,12 @@ export default {
   methods: {
       userDelete (index, user) {
           if(confirm("Delete: " + user.firstName + " " + user.lastName + "?")){
-              this.users.splice(index, 1);
               this.$http.delete('/api/admin/users/' + user.id)
                 .then(res => {
+                    this.users.splice(index, 1);
                     console.log(res.status);
+                }).catch((e) => {
+                  console.log(e);
                 })
           }
       }

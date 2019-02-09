@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1>Edit User {{ id }}</h1>
+        <h1>Creating New User</h1>
         <div v-if="userSaved">
             <div class="row">
                 <div class="alert alert-success text-center">
@@ -81,7 +81,7 @@
                     lastName: this.user.lastName,
                     emailAddress: this.user.emailAddress
                 }
-                this.$http.put("/api/admin/users/" + this.id, formData)
+                this.$http.post("/api/admin/users", formData)
                     .then(res => {
                         console.log(res);
                         if(res.status === 200){
@@ -90,12 +90,6 @@
                         }
                     }).catch(error => console.log(error));
             }
-        },
-        created() {
-            this.$http.get("/api/admin/users/" + this.id)
-                .then(res => {
-                    this.user = res.data;
-                });
         }
     }
 </script>

@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/Home.vue'
 import UserEdit from '@/components/UserEdit.vue'
+import UserNew from '@/components/UserNew.vue'
 
 Vue.use(Router)
 
@@ -27,6 +28,11 @@ export default new Router({
       name: 'userEdit',
       component: UserEdit,
       props: true
+    },
+    {
+      path: '/users/new',
+      name: 'userNew',
+      component: UserNew
     }
   ]
 })
