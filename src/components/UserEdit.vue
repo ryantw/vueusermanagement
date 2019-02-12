@@ -1,61 +1,69 @@
 <template>
-    <div>
-        <h1>Edit User {{ id }}</h1>
-        <div v-if="userSaved">
-            <div class="row">
-                <div class="alert alert-success text-center">
-                    <h2>User saved.</h2>
-                </div>
-            </div>
-        </div>
-        <div v-if="!userSaving">
-            <form>
-                <div class="row">
-                    <div class="form-group col-md-4">
-                        <label for="firstName">Firstname</label>
-                        <input
-                          type="text"
-                          id="firstName"
-                          class="form-control"
-                          v-model="user.firstName"
-                        >
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="lastName">Lastname</label>
-                        <input
-                          type="text"
-                          id="lastName"
-                          class="form-control"
-                          v-model="user.lastName"
-                        >
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="emailAddress">Email Address</label>
-                        <input
-                            type="text"
-                            id="emailAddress"
-                            class="form-control"
-                            v-model="user.emailAddress"
-                        />
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="form-group col-md-12">
-                        <button
-                            class="btn btn-success"
-                            @click.prevent="saveUser"
-                          >
-                            Save Changes
-                          </button>
-                    </div>
-                </div>
-            </form>
-        </div>
+  <div>
+    <h1>Edit User {{ id }}</h1>
+    <div v-if="userSaved">
+      <h2>User saved.</h2>
     </div>
+    <v-form>
+      <v-container>
+        <v-layout>
+          <v-flex
+            xs12
+            md4
+          >
+            <v-text-field
+              id="firstName"
+              v-model="user.firstName"
+              label="First Name"
+              type="text"
+              name="firstName"
+              class="form-control"
+              :rules="[rules.required, rules.length255]"
+            />
+          </v-flex>
+          <v-flex
+            xs12
+            md4
+          >
+            <v-text-field
+              id="lastName"
+              v-model="user.lastName"
+              label="Last Name"
+              type="text"
+              name="lastName"
+              class="form-control"
+              :rules="[rules.required, rules.length255]"
+            />
+          </v-flex>
+          <v-flex
+            xs12
+            md4
+          >
+            <v-text-field
+              id="emailAddress"
+              v-model="user.emailAddress"
+              label="Email Address"
+              type="text"
+              name="emailAddress"
+              class="form-control"
+              :rules="[rules.required, rules.email, rules.length255]"
+            />
+          </v-flex>
+        </v-layout>
+        <v-btn
+          color="success"
+          @click.prevent="saveUser"
+        >
+          Save Changes
+        </v-btn>
+      </v-container>
+    </v-form>
+  </div>
 </template>
 
 <script>
 import UserUpdateRequest from '@/models/requests/UserUpdateRequest'
+import ValidationRules from '@/utils/ValidationRules'
 
 export default {
   props: {
@@ -74,8 +82,15 @@ export default {
       },
       userSaving: false,
       userSaved: false,
-      userToken: this.$store.getters.getUserToken
+      userToken: this.$store.getters.getUserToken,
+      rules: ValidationRules
     }
+  },
+  created () {
+    // should take supplied prop ID and call api to get up to date data on user
+    // then use that data to update form fields
+
+    this.getUser()
   },
   methods: {
     async saveUser () {
@@ -103,12 +118,6 @@ export default {
         this.user = user
       }
     }
-  },
-  created () {
-    // should take supplied prop ID and call api to get up to date data on user
-    // then use that data to update form fields
-
-    this.getUser()
   }
 }
 </script>
