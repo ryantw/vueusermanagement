@@ -4,9 +4,17 @@
     <hr>
     <p>
       <router-link
-      class="btn btn-success"
-      :to="{name: 'userNew'}"
-      >Add New User</router-link>
+        class="btn btn-success m-1"
+        :to="{name: 'userNew'}"
+      >
+        Add New User
+      </router-link>
+      <button
+        class="btn btn-secondary m-1"
+        @click="getUsers()"
+      >
+        Refresh
+      </button>
     </p>
     <div v-if='users.length > 0'>
       <table class='table table-striped table-dark'>
@@ -26,14 +34,22 @@
             <td>{{ user.firstName }}</td>
             <td>{{ user.lastName }}</td>
             <td>{{ user.emailAddress }}</td>
-            <td>{{ user.roles }}</td>
+            <td>{{ user.role }}</td>
             <td>
               <router-link
                 tag="a"
                 :to="{ name: 'userEdit', params: { id: user.id }}"
-                class="btn btn-info"
-                >Edit</router-link>
-              <a href='#' class='btn btn-danger' @click="userDelete(index, user)">Delete</a>
+                class="btn btn-info m-1"
+              >
+                Edit
+              </router-link>
+              <button
+                href=""
+                class="btn btn-danger m-1"
+                @click="deleteUser(index, user)"
+              >
+                Delete
+              </button>
             </td>
           </tr>
         </tbody>
@@ -49,30 +65,27 @@
 export default {
   data () {
     return {
-      users: []
     }
   },
   methods: {
-      userDelete (index, user) {
-          if(confirm("Delete: " + user.firstName + " " + user.lastName + "?")){
-              this.$http.delete('/api/admin/users/' + user.id)
-                .then(res => {
-                    this.users.splice(index, 1);
-                    console.log(res.status);
-                }).catch((e) => {
-                  console.log(e);
-                })
-          }
+    async deleteUser (index, user) {
+      if (!confirm('Delete: ' + user.firstName + ' ' + user.lastName + '?')) {
+        return
       }
+
+      this.$store.dispatch('User/deleteUser', user.id)
+    },
+    async getUsers () {
+      await this.$store.dispatch('User/getUsers')
+    }
   },
-  created() {
-      this.$http.get('/api/admin/users')
-        .then(res => {
-            console.log(res);
-            this.users = res.data;
-        }).catch((e) => {
-            console.log(e);
-        })
+  computed: {
+    users: function () {
+      return this.$store.getters['User/users']
+    }
+  },
+  created () {
+    this.getUsers()
   }
 }
 </script>

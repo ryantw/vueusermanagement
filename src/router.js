@@ -1,10 +1,13 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from './views/Home.vue'
 import UserEdit from '@/components/UserEdit.vue'
 import UserNew from '@/components/UserNew.vue'
 
 Vue.use(Router)
+
+function loadComponent (path) {
+  return () => import(/* webpackChunkName: "[path]" */ `./views/${path}.vue`)
+}
 
 export default new Router({
   mode: 'history',
@@ -13,7 +16,7 @@ export default new Router({
     {
       path: '/',
       name: 'home',
-      component: Home
+      component: loadComponent('Home')
     },
     {
       path: '/users',

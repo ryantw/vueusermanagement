@@ -39,9 +39,12 @@
                 <div class="row">
                     <div class="form-group col-md-12">
                         <button
-                            class="btn btn-success"
-                            @click.prevent="saveUser"
-                            >Save Changes</button>
+                          type="submit"
+                          class="btn btn-success"
+                          @click.prevent="updateUser"
+                        >
+                          Save Changes
+                        </button>
                     </div>
                 </div>
             </form>
@@ -57,39 +60,38 @@
 </template>
 
 <script>
-    export default {
-        props: [ 'id' ],
-        data() {
-            return { 
-                user: {
-                    id: '',
-                    firstName: '',
-                    lastName: '',
-                    emailAddress: '',
-                    role: ''
-                },
-                userSaving: false,
-                userSaved: false,
-                userToken: this.$store.getters.getUserToken
-            }
-        },
-        methods: {
-            saveUser() {
-                this.userSaving = true;
-                const formData = {
-                    firstName: this.user.firstName,
-                    lastName: this.user.lastName,
-                    emailAddress: this.user.emailAddress
-                }
-                this.$http.post("/api/admin/users", formData)
-                    .then(res => {
-                        console.log(res);
-                        if(res.status === 200){
-                            this.userSaving = false;
-                            this.userSaved = true;
-                        }
-                    }).catch(error => console.log(error));
-            }
-        }
+import UserAddRequest from '@/models/requests/UserAddRequest'
+
+export default {
+  data () {
+    return {
+      user: {
+        id: '',
+        firstName: '',
+        lastName: '',
+        emailAddress: '',
+        role: ''
+      },
+      userSaving: false,
+      userSaved: false,
+      userToken: this.$store.getters.getUserToken
     }
+  },
+  methods: {
+    async updateUser () {
+      const userAddRequest = new UserAddRequest(
+        this.user.firstName,
+        this.user.lastName,
+        this.user.emailAddress
+      )
+
+      try {
+        await this.$store.dispatch('User/addUser', userAddRequest)
+        this.$router.push('/users')
+      } catch (e) {
+        console.log('failed to add user, not changing route')
+      }
+    }
+  }
+}
 </script>
