@@ -1,15 +1,11 @@
 <template>
-  <div class="app">
-    <app-header></app-header>
-    <div class="router-wrapper container">
+  <v-app class="app">
+    <app-header />
+    <v-container class="router-wrapper">
       <Loading v-show="isLoading" />
-      <div class="row">
-        <div class="col-lg-12">
-          <router-view/>
-        </div>
-      </div>
-    </div>
-  </div>
+      <router-view />
+    </v-container>
+  </v-app>
 </template>
 
 <script>
@@ -36,10 +32,8 @@ export default {
   flex-direction: column;
 
   .router-wrapper {
+    position: relative;
     flex: 1;
   }
-}
-.container {
-  position: relative;
 }
 </style>

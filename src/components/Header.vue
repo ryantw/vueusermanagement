@@ -1,21 +1,28 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <router-link
+  <v-toolbar>
+    <v-toolbar-title>
+      <v-btn
+        flat
         to="/"
-        class="navbar-brand"
       >
-      User Management
-    </router-link>
-
-    <ul class="nav navbar-nav navbar-right">
-      <router-link
+        User Management
+      </v-btn>
+    </v-toolbar-title>
+    <v-spacer />
+    <v-toolbar-items
+      class="hidden-sm-and-down"
+    >
+      <v-btn
+        flat
         to="/users"
-        tag="li"
-        class="nav-item"
-        activeClass="active"
+        tag="a"
+        active-class="active"
       >
-        <a>Users</a>
-      </router-link>
-    </ul>
-  </nav>
+        Users
+      </v-btn>
+    </v-toolbar-items>
+    <v-toolbar-side-icon
+      class="hidden-md-and-up"
+    />
+  </v-toolbar>
 </template>
