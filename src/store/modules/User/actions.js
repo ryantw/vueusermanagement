@@ -74,6 +74,19 @@ const actions = {
     } finally {
       dispatch('setIsLoading', false, { root: true })
     }
+  },
+
+  async loginUser ({ dispatch, commit, state }, user) {
+    console.log('in loginUser()')
+    dispatch('setIsLoading', true, { root: true })
+    try {
+      const response = await api.loginUser(user)
+      console.log(response)
+    } catch (e) {
+      console.log('login failed: ', e)
+    } finally {
+      dispatch('setIsLoading', false, { root: true })
+    }
   }
 }
 

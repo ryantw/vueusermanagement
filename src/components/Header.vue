@@ -20,6 +20,14 @@
       >
         Users
       </v-btn>
+      <v-btn
+        flat
+        to="/login"
+        tag="a"
+        active-class="active"
+      >
+        Login
+      </v-btn>
     </v-toolbar-items>
     <v-toolbar-side-icon
       class="hidden-md-and-up"
