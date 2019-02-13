@@ -1,7 +1,6 @@
 <template>
   <div>
     <h1>Users</h1>
-    <hr>
     <p>
       <v-btn
         color="primary"
@@ -53,7 +52,7 @@
       <p>No users.</p>
     </div>
     <yes-no-dialog
-      :show-dialog="showDialog"
+      v-model="showDialog"
       :text="`Remove ${selectedUser.firstName} ${selectedUser.lastName}`"
       @dialogResponse="handleDialogResponse"
     />
@@ -96,10 +95,10 @@ export default {
       await this.$store.dispatch('User/getUsers')
     },
     async handleDialogResponse (response) {
+      this.showDialog = false
       if (!response) return
 
       await this.$store.dispatch('User/deleteUser', this.selectedUser.id)
-      this.showDialog = false
     }
   }
 }

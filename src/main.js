@@ -8,11 +8,12 @@ import './registerServiceWorker'
 import Api from './api'
 import MockApi from './api/mockApi'
 
-const mockApi = false
+const mockApi = String(process.env.VUE_APP_MOCK_API) === 'true'
 
 let api = Api
 
 if (mockApi) {
+  console.log('Mocking all api calls!')
   api = MockApi
 }
 

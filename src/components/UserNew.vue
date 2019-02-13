@@ -1,10 +1,16 @@
 <template>
   <div>
     <h1>Creating New User</h1>
-    <div v-if="userSaved">
-      <h2>User saved.</h2>
+    <div v-if="showError">
+      <h2 class="error">
+        Please fix all errors.
+      </h2>
     </div>
-    <v-form>
+    <v-form
+      ref="form"
+      v-model="valid"
+      @input="handleFormInput"
+    >
       <v-container>
         <v-layout>
           <v-flex
@@ -82,11 +88,18 @@ export default {
       userSaving: false,
       userSaved: false,
       userToken: this.$store.getters.getUserToken,
-      rules: ValidationRules
+      rules: ValidationRules,
+      valid: false,
+      showError: false
     }
   },
   methods: {
     async updateUser () {
+      if (!this.valid) {
+        this.$refs.form.validate()
+        this.showError = true
+        return
+      }
       const userAddRequest = new UserAddRequest(
         this.user.firstName,
         this.user.lastName,
@@ -98,6 +111,12 @@ export default {
         this.$router.push('/users')
       } catch (e) {
         console.log('failed to add user, not changing route')
+      }
+    },
+    handleFormInput () {
+      if (!this.showError) return
+      if (this.valid) {
+        this.showError = false
       }
     }
   }

@@ -1,7 +1,8 @@
 <template>
   <v-dialog
-    v-model="showDialog"
+    :value="value"
     max-width="290"
+    @input="$emit('input', value)"
   >
     <v-card>
       <v-card-title
@@ -41,7 +42,7 @@
 export default {
   name: 'YesNoDialog',
   props: {
-    showDialog: {
+    value: {
       type: Boolean,
       required: true
     },
@@ -66,18 +67,9 @@ export default {
       default: 'Cancel'
     }
   },
-  watch: {
-    dialog: function (oldValue, newValue) {
-      this.dialogWatcher(newValue)
-    }
-  },
   methods: {
     dialogResponse (response) {
       this.$emit('dialogResponse', response)
-    },
-    dialogWatcher (dialog) {
-      if (dialog) return
-      this.dialogResponse(false)
     }
   }
 }
