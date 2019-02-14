@@ -1,5 +1,6 @@
 const ApiRootUrl = 'http://localhost:8080/api'
 const UserUrl = '/user'
-const UserLogin = '/login'
+const UserLoginUrl = '/auth/login'
+const WhoAmIUrl = '/auth/whoami'
 
-export { ApiRootUrl, UserUrl, UserLogin }
+export { ApiRootUrl, UserUrl, UserLoginUrl, WhoAmIUrl }

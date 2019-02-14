@@ -10,6 +10,11 @@ npm install
 npm run serve
 ```
 
+### Compiles and hot-reloads for development with mock api calls
+```
+npm run serve:mockapi
+```
+
 ### Compiles and minifies for production
 ```
 npm run build

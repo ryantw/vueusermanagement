@@ -1,10 +1,9 @@
 export default class UserAddRequest {
-  constructor (firstName = '', lastName = '', emailAddress = '', role) {
+  constructor (firstName = '', lastName = '', email = '', password = 'test', username = '') {
     this.firstName = firstName
     this.lastName = lastName
-    this.emailAddress = emailAddress
-    if (role && role.length) {
-      this.role = role
-    }
+    this.email = email
+    this.password = password
+    this.username = username || email
   }
 }

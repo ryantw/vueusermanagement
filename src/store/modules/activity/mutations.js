@@ -1,0 +1,10 @@
+const mutations = {
+  setLoggedIn (state, loggedIn) {
+    state.loggedIn = loggedIn
+  },
+  setExpirationTime (state, expirationTime) {
+    state.expirationTime = expirationTime
+  }
+}
+
+export default mutations

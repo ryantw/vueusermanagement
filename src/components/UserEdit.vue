@@ -1,10 +1,16 @@
 <template>
   <div>
     <h1>Edit User {{ id }}</h1>
-    <div v-if="userSaved">
-      <h2>User saved.</h2>
+    <div v-if="showError">
+      <h2 class="error">
+        Please fix all errors.
+      </h2>
     </div>
-    <v-form>
+    <v-form
+      ref="form"
+      v-model="valid"
+      @input="handleFormInput"
+    >
       <v-container>
         <v-layout>
           <v-flex
@@ -41,7 +47,7 @@
           >
             <v-text-field
               id="emailAddress"
-              v-model="user.emailAddress"
+              v-model="user.email"
               label="Email Address"
               type="text"
               name="emailAddress"
@@ -83,7 +89,9 @@ export default {
       userSaving: false,
       userSaved: false,
       userToken: this.$store.getters.getUserToken,
-      rules: ValidationRules
+      rules: ValidationRules,
+      valid: false,
+      showError: false
     }
   },
   created () {
@@ -94,11 +102,16 @@ export default {
   },
   methods: {
     async saveUser () {
+      if (!this.valid) {
+        this.$refs.form.validate()
+        this.showError = true
+        return
+      }
       const userUpdateRequest = new UserUpdateRequest(
         this.id,
         this.user.firstName,
         this.user.lastName,
-        this.user.emailAddress
+        this.user.email
       )
       try {
         await this.$store.dispatch('User/updateUser', userUpdateRequest)
@@ -116,6 +129,13 @@ export default {
         console.log('could not find user', this.id)
       } finally {
         this.user = user
+      }
+    },
+
+    handleFormInput () {
+      if (!this.showError) return
+      if (this.valid) {
+        this.showError = false
       }
     }
   }

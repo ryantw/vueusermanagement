@@ -9,7 +9,8 @@ const actions = {
     let users = []
     dispatch('setIsLoading', true, { root: true })
     try {
-      users = await api.getUsers()
+      const usersResponse = await api.getUsers()
+      users = usersResponse.data
     } catch (e) {
       console.log('failed to get users', e)
     } finally {
@@ -22,7 +23,8 @@ const actions = {
     let user = {}
     dispatch('setIsLoading', true, { root: true })
     try {
-      user = await api.getUser(id)
+      const userResponse = await api.getUser(id)
+      user = userResponse.data
     } catch (e) {
       console.log('failed to get user', id, e)
     } finally {
@@ -35,7 +37,8 @@ const actions = {
     dispatch('setIsLoading', true, { root: true })
     try {
       const response = await api.addUser(request)
-      commit('setUsers', getters.users.concat(response))
+      const user = response.data
+      commit('setUsers', getters.users.concat(user))
     } catch (e) {
       console.log('failed to add new user', e)
     } finally {
@@ -52,7 +55,7 @@ const actions = {
       updatedUsers[index] = request
 
       commit('setUsers', updatedUsers)
-      console.log('updated user', request.id, response)
+      console.log('updated user', request.id, response.data)
     } catch (e) {
       console.log('failed to add new user', e)
     } finally {
@@ -68,7 +71,7 @@ const actions = {
       console.log(index)
       const updatedUsers = getters.users.slice(0, index).concat(getters.users.slice(index + 1, getters.users.length))
       commit('setUsers', updatedUsers)
-      console.log('deleted user', id, response)
+      console.log('deleted user', id, response.data)
     } catch (e) {
       console.log('failed to delete user', id, e)
     } finally {
@@ -76,12 +79,29 @@ const actions = {
     }
   },
 
-  async loginUser ({ dispatch, commit, state }, user) {
+  async login ({ dispatch, commit, state }, loginRequest) {
     console.log('in loginUser()')
     dispatch('setIsLoading', true, { root: true })
     try {
-      const response = await api.loginUser(user)
-      console.log(response)
+      // gets JWT and expiration time only
+      const loginResponse = await api.loginUser(loginRequest)
+
+      // add token to localStorage
+      localStorage.setItem('token', loginResponse.data.access_token)
+
+      dispatch('Activity/setLoggedin', loginResponse.data)
+
+      console.log(loginResponse)
+
+      try {
+        // gets user context
+        const userResponse = await api.whoAmI()
+        dispatch('setUser', userResponse.data)
+        console.log('retrieved user', userResponse.data)
+      } catch (e) {
+        console.log('Who am I failed', e)
+        throw e
+      }
     } catch (e) {
       console.log('login failed: ', e)
     } finally {
