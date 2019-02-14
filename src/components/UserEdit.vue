@@ -47,7 +47,7 @@
           >
             <v-text-field
               id="emailAddress"
-              v-model="user.emailAddress"
+              v-model="user.email"
               label="Email Address"
               type="text"
               name="emailAddress"
@@ -111,7 +111,7 @@ export default {
         this.id,
         this.user.firstName,
         this.user.lastName,
-        this.user.emailAddress
+        this.user.email
       )
       try {
         await this.$store.dispatch('User/updateUser', userUpdateRequest)

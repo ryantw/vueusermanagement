@@ -1,11 +1,8 @@
 export default class UserUpdateRequest {
-  constructor (id, firstName = '', lastName = '', emailAddress = '', role) {
+  constructor (id, firstName = '', lastName = '', email = '') {
     this.id = id
     this.firstName = firstName
     this.lastName = lastName
-    this.emailAddress = emailAddress
-    if (role && role.length) {
-      this.role = role
-    }
+    this.email = email
   }
 }

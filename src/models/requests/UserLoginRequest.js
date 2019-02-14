@@ -1,6 +1,6 @@
 export default class UserLoginRequest {
-  constructor (emailAddress = '', password = '') {
-    this.emailAddress = emailAddress
+  constructor (username = '', password = '') {
+    this.username = username
     this.password = password
   }
 }

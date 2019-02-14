@@ -4,6 +4,9 @@ const mutations = {
   },
   setUserToken (state, token) {
     state.userToken = token
+  },
+  setUser (state, user) {
+    state.user = user
   }
 }
 

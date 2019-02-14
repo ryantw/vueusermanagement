@@ -27,8 +27,8 @@
           <td>{{ props.item.id }}</td>
           <td>{{ props.item.firstName }}</td>
           <td>{{ props.item.lastName }}</td>
-          <td>{{ props.item.emailAddress }}</td>
-          <td>{{ props.item.role }}</td>
+          <td>{{ props.item.email }}</td>
+          <td>{{ props.item.authorites }}</td>
           <td>
             <v-btn
               color="success"
@@ -71,8 +71,8 @@ export default {
         { text: 'ID', sortable: true, value: 'id' },
         { text: 'First Name', sortable: true, value: 'firstName' },
         { text: 'Last Name', sortable: true, value: 'lastName' },
-        { text: 'Email Address', sortable: true, value: 'emailAddress' },
-        { text: 'Role', sortable: true, value: 'role' },
+        { text: 'Email Address', sortable: true, value: 'email' },
+        { text: 'Role', sortable: true, value: 'authorities' },
         { text: 'Actions', sortable: false }],
       showDialog: false,
       selectedUser: {}

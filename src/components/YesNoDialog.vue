@@ -2,7 +2,7 @@
   <v-dialog
     :value="value"
     max-width="290"
-    @input="$emit('input', value)"
+    @input="handleModelChanged"
   >
     <v-card>
       <v-card-title
@@ -70,6 +70,9 @@ export default {
   methods: {
     dialogResponse (response) {
       this.$emit('dialogResponse', response)
+    },
+    handleModelChanged (value) {
+      this.dialogResponse(value)
     }
   }
 }

@@ -2,7 +2,7 @@
   <v-dialog
     :value="value"
     max-width="290"
-    @input="$emit('input', value)"
+    @input="handleModelChanged"
   >
     <v-card>
       <v-card-title
@@ -23,7 +23,7 @@
               />
               <v-text-field
                 id="password"
-                v-model="emailAddress"
+                v-model="password"
                 autocomplete="current-password"
                 label="Password"
                 name="password"
@@ -47,7 +47,7 @@
         <v-btn
           color="green darken-1"
           flat="flat"
-          @click.prevent="handleSubmit"
+          @click.prevent="handleModelChanged"
         >
           Cancel
         </v-btn>
@@ -58,6 +58,7 @@
 </template>
 
 <script>
+import UserLoginRequest from '@/models/requests/UserLoginRequest'
 export default {
   props: {
     value: {
@@ -71,15 +72,12 @@ export default {
       password: ''
     }
   },
-  watch: {
-    immediate: true,
-    value: function (newValue) {
-      // this.$emit('input', newValue)
-      console.log('here')
-    }
-  },
   methods: {
     handleSubmit () {
+      this.$store.dispatch('User/login', new UserLoginRequest(this.emailAddress, this.password))
+      this.$emit('close')
+    },
+    handleModelChanged (value) {
       this.$emit('close')
     }
   }

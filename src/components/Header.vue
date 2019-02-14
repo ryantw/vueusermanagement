@@ -9,29 +9,19 @@
       </v-btn>
     </v-toolbar-title>
     <v-spacer />
-    <v-toolbar-items
-      class="hidden-sm-and-down"
-    >
+    <v-toolbar-items>
       <v-btn
         flat
         to="/users"
         tag="a"
         active-class="active"
+        class="hidden-sm-and-down"
       >
         Users
       </v-btn>
       <v-btn
         flat
-        to="/login"
-        tag="a"
-        active-class="active"
-        class="hidden-md-and-up"
-      >
-        Login
-      </v-btn>
-      <v-btn
-        flat
-        class="hidden-sm-and-down"
+        class=""
         @click="showLoginDialog = true"
       >
         Login
