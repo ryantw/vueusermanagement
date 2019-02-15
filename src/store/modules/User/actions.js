@@ -96,7 +96,7 @@ const actions = {
       try {
         // gets user context
         const userResponse = await api.whoAmI()
-        dispatch('setUser', userResponse.data)
+        commit('setUser', userResponse.data, false, { root: true })
         console.log('retrieved user', userResponse.data)
       } catch (e) {
         console.log('Who am I failed', e)

@@ -1,7 +1,6 @@
 const state = {
   userToken: 'TMPTMP',
-  users: [],
-  user: {}
+  users: []
 }
 
 export default state

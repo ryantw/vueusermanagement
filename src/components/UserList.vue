@@ -28,7 +28,14 @@
           <td>{{ props.item.firstName }}</td>
           <td>{{ props.item.lastName }}</td>
           <td>{{ props.item.email }}</td>
-          <td>{{ props.item.authorites }}</td>
+          <td>
+            <div
+              v-for="authority in props.item.authorities"
+              :key="authority.authority"
+            >
+              {{ authority.authority }}
+            </div>
+          </td>
           <td>
             <v-btn
               color="success"
@@ -79,6 +86,9 @@ export default {
     }
   },
   computed: {
+    user: function () {
+      return this.$store.getters.user
+    },
     users: function () {
       return this.$store.getters['User/users']
     }

@@ -1,6 +1,7 @@
 <template>
   <v-app class="app">
     <app-header />
+    <app-banner />
     <v-container class="router-wrapper">
       <Loading v-show="isLoading" />
       <router-view />
@@ -11,10 +12,12 @@
 <script>
 import Header from '@/components/Header.vue'
 import Loading from '@/components/Loading.vue'
+import Banner from '@/components/Banner.vue'
 
 export default {
   components: {
     appHeader: Header,
+    appBanner: Banner,
     Loading
   },
   computed: {
