@@ -93,18 +93,10 @@ const actions = {
 
       console.log(loginResponse)
 
-      /*
-      try {
-        // gets user context
-        const userResponse = await api.whoAmI()
-        commit('setUser', userResponse.data, false, { root: true })
-        console.log('retrieved user', userResponse.data)
-      } catch (e) {
-        console.log('Who am I failed', e)
-        throw e
-      }
-      */
+      /* Have some global push method? Only push if valid login */
+      this.$router.push('/users')
     } catch (e) {
+      dispatch('addMessage', { message: 'Log in failed.', type: 'error' }, { root: true })
       console.log('login failed: ', e)
     } finally {
       dispatch('setIsLoading', false, { root: true })

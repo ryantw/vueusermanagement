@@ -65,8 +65,7 @@ export default {
         this.password
       )
       try {
-        await this.$store.dispatch('User/loginUser', userLoginRequest)
-        this.$router.push('/users')
+        await this.$store.dispatch('User/login', userLoginRequest)
       } catch (e) {
         this.loginErrors = true
         console.log('Login failed, parse out and handle diff return codes?')

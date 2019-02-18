@@ -1,7 +1,7 @@
 const state = {
   isLoading: false,
   user: null,
-  messages: [ { message: 'Test info', type: 'info' } ],
+  messages: [ { message: 'Test message.', type: 'info' } ],
   selectedMessageIndex: 0
 }
 
