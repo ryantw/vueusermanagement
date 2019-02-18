@@ -9,7 +9,20 @@ base.interceptors.request.use((config) => {
     config.headers.authorization = `Bearer ${token}`
   }
   return config
-}, (error) => Promise.reject(error))
+}, (error) => {
+  console.log(error.response.status)
+  return Promise.reject(error.response)
+})
+
+base.interceptors.response.use(
+  (config) => config,
+  (error) => {
+    if (error.response.status === 401) {
+      // call logout
+      // do login prompt?
+    }
+    return Promise.reject(error.response.data)
+  })
 
 const api = {
   getUsers: () => base.get(`${ApiRootUrl}${UserUrl}`),

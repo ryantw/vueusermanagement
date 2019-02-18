@@ -13,6 +13,7 @@ const actions = {
       users = usersResponse.data
     } catch (e) {
       console.log('failed to get users', e)
+      dispatch('addMessage', { message: 'Failed to load users.', type: 'error' }, { root: true })
     } finally {
       commit('setUsers', users)
       dispatch('setIsLoading', false, { root: true })
@@ -85,19 +86,14 @@ const actions = {
     try {
       // gets JWT and expiration time only
       const loginResponse = await api.loginUser(loginRequest)
-
+      console.log(loginResponse)
       // add token to localStorage
       localStorage.setItem('token', loginResponse.data.access_token)
-
       dispatch('Activity/setLoggedin', loginResponse.data)
-
       console.log(loginResponse)
-
-      /* Have some global push method? Only push if valid login */
-      this.$router.push('/users')
     } catch (e) {
-      dispatch('addMessage', { message: 'Log in failed.', type: 'error' }, { root: true })
       console.log('login failed: ', e)
+      throw e
     } finally {
       dispatch('setIsLoading', false, { root: true })
     }

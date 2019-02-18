@@ -74,8 +74,11 @@ export default {
   },
   methods: {
     handleSubmit () {
-      this.$store.dispatch('User/login', new UserLoginRequest(this.emailAddress, this.password))
-      this.$emit('close')
+      try {
+        this.$store.dispatch('User/login', new UserLoginRequest(this.emailAddress, this.password))
+        this.$emit('close')
+      } catch (e) {
+      }
     },
     handleModelChanged (value) {
       this.$emit('close')

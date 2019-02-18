@@ -65,10 +65,11 @@ export default {
         this.password
       )
       try {
-        await this.$store.dispatch('User/login', userLoginRequest)
+        const loginResponse = await this.$store.dispatch('User/login', userLoginRequest)
+        console.log(loginResponse)
       } catch (e) {
+        this.$store.dispatch('addMessage', { message: 'Log in failed.', type: 'error' })
         this.loginErrors = true
-        console.log('Login failed, parse out and handle diff return codes?')
       }
     }
   }
