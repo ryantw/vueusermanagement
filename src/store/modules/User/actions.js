@@ -80,7 +80,7 @@ const actions = {
   },
 
   async login ({ dispatch, commit, state }, loginRequest) {
-    console.log('in loginUser()')
+    console.log('in login()')
     dispatch('setIsLoading', true, { root: true })
     try {
       // gets JWT and expiration time only
@@ -93,6 +93,7 @@ const actions = {
 
       console.log(loginResponse)
 
+      /*
       try {
         // gets user context
         const userResponse = await api.whoAmI()
@@ -102,6 +103,7 @@ const actions = {
         console.log('Who am I failed', e)
         throw e
       }
+      */
     } catch (e) {
       console.log('login failed: ', e)
     } finally {
