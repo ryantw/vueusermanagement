@@ -5,7 +5,7 @@ const base = axios.create()
 // Add jwt token to request if one is saved in localstorage
 base.interceptors.request.use((config) => {
   const token = localStorage.getItem('token')
-  if (token){
+  if (token) {
     config.headers.authorization = `Bearer ${token}`
   }
   return config

@@ -47,7 +47,7 @@
           >
             <v-text-field
               id="emailAddress"
-              v-model="user.email"
+              v-model="user.emailAddress"
               label="Email Address"
               type="text"
               name="emailAddress"
@@ -111,7 +111,7 @@ export default {
         this.id,
         this.user.firstName,
         this.user.lastName,
-        this.user.email
+        this.user.emailAddress
       )
       try {
         await this.$store.dispatch('User/updateUser', userUpdateRequest)
@@ -125,6 +125,7 @@ export default {
       let user = {}
       try {
         user = await this.$store.dispatch('User/getUser', this.id)
+        console.log(user)
       } catch (e) {
         console.log('could not find user', this.id)
       } finally {

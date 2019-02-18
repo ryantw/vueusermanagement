@@ -27,7 +27,7 @@
           <td>{{ props.item.id }}</td>
           <td>{{ props.item.firstName }}</td>
           <td>{{ props.item.lastName }}</td>
-          <td>{{ props.item.email }}</td>
+          <td>{{ props.item.emailAddress }}</td>
           <td>
             <div
               v-for="authority in props.item.authorities"
