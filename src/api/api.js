@@ -8,6 +8,10 @@ base.interceptors.request.use((config) => {
   if (token) {
     config.headers.authorization = `Bearer ${token}`
   }
+  const tenantId = process.env.VUE_APP_TENANTID
+  if (tenantId) {
+    config.headers['X-TenantID'] = tenantId
+  }
   return config
 }, (error) => {
   console.log(error.response.status)
