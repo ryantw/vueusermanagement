@@ -1,12 +1,10 @@
-let timeout // the timer till timeout
+let timeout // the timeout timer
 let timeoutTime = 1 // the time in ms that the timer is set for
 let inactivityTimer = false // value if inactivity timer is started
-let sessionStartTime // session time
 
 function startInactivityTimer (dispatch) {
   inactivityTimer = true
-  sessionStartTime = Date.now()
-
+  dispatch('setSessionStartTime', Date.now())
   refresh(dispatch)
 }
 
@@ -14,26 +12,25 @@ function refresh (dispatch) {
   clearTimeout(timeout)
   timeout = setTimeout(() => {
     // Log out the user
-    dispatch('User/logout')
+    dispatch('logout', false, {})
   }, timeoutTime)
 }
 
-function getSessionTime () {
-  const now = Date.now()
-  return now - sessionStartTime
-}
-
 const actions = {
-  setLoggedIn ({ commit }, loginResponse) {
-    if (!loginResponse.expires_in) {
-      commit('setLoggedIn', false)
+  startInactivityTimer ({ commit }, expirationTimeInMs) {
+    if (!expirationTimeInMs) {
+      commit('isRunning', false)
       return
     }
-    commit('setExpirationTime', loginResponse.expires_in)
-    commit('setLoggedIn', true)
-    if (!loginResponse || inactivityTimer) return
+    commit('setExpirationTime', expirationTimeInMs)
+    commit('isRunning', true)
+    if (!expirationTimeInMs || !inactivityTimer) return
 
     startInactivityTimer()
+  },
+  stopInactivityTimer ({ commit }) {
+    clearTimeout(timeout)
+    commit('isRunning', false)
   }
 }
 

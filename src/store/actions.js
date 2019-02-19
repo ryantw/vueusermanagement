@@ -13,6 +13,9 @@ const actions = {
   },
   setSelectedMessageIndex ({ commit }, index) {
     commit('setSelectedMessageIndex', index)
+  },
+  logout ({ dispatch }) {
+    dispatch('User/logout')
   }
 }
 

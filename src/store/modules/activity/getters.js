@@ -1,5 +1,7 @@
 const getters = {
-  loggedIn: (state) => state.loggedIn
+  isRunning: (state) => state.isRunning,
+  sessionStartTime: (state) => state.sessionStartTime,
+  sessionTime: (state) => Date.now() - state.sessionStartTime
 }
 
 export default getters

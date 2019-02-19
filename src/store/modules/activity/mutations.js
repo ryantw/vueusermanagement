@@ -1,5 +1,5 @@
 const mutations = {
-  setLoggedIn (state, loggedIn) {
+  setIsRunning (state, loggedIn) {
     state.loggedIn = loggedIn
   },
   setExpirationTime (state, expirationTime) {
