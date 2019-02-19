@@ -1,11 +1,13 @@
 <template>
   <v-app class="app">
     <app-header />
-    <app-banner />
-    <v-container class="router-wrapper">
+    <div class="content-wrapper">
+      <app-banner />
       <Loading v-show="isLoading" />
-      <router-view />
-    </v-container>
+      <v-container class="router-wrapper">
+        <router-view />
+      </v-container>
+    </div>
   </v-app>
 </template>
 
@@ -37,6 +39,10 @@ export default {
   .router-wrapper {
     position: relative;
     flex: 1;
+  }
+
+  .content-wrapper {
+    position: relative;
   }
 }
 </style>
