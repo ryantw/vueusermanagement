@@ -1,3 +1,4 @@
-import Api from './api.js'
+import TenantApi from './Tenants'
+import UserApi from './User'
 
-export default Api
+export { UserApi, TenantApi }

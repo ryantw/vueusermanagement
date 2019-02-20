@@ -17,6 +17,21 @@ const mutations = {
   setSelectedMessageIndex (state, index) {
     if (index < 0 || index >= state.messages.length) state.selectedMessageIndex = 0
     state.selectedMessageIndex = index
+  },
+  setTenants (state, tenants) {
+    state.tenants = tenants
+  },
+  setSelectedTenantIndex (state, index) {
+    localStorage.setItem('tenantId', state.tenants[index].id)
+    state.selectedTenantIndex = index
+  },
+  showSnackbar (state, value) {
+    state.snackbarValue = value
+    state.snackbarVisible = true
+  },
+  hideSnackbar (state) {
+    state.snackbarValue = { text: '', type: '' }
+    state.snackbarVisible = false
   }
 }
 

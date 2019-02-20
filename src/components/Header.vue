@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import LoginDialog from '@/components/LoginDialog.vue'
+import LoginDialog from '@/components/login/LoginDialog.vue'
 
 export default {
   components: {

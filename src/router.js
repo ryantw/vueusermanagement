@@ -7,8 +7,8 @@ function loadView (view) {
   return () => import(/* webpackChunkName: "view-[request]" */ `./views/${view}.vue`)
 }
 
-function loadComponent (component) {
-  return () => import(/* webpackChunkName: "component-[request]" */ `./components/${component}.vue`)
+function loadComponent (component, path = './components/') {
+  return () => import(/* webpackChunkName: "component-[request]" */ `${path}${component}.vue`)
 }
 
 export default new Router({
@@ -39,7 +39,7 @@ export default new Router({
     {
       path: '/login',
       name: 'userLogin',
-      component: loadComponent('UserLogin')
+      component: loadComponent('UserLogin', './components/login')
     }
   ]
 })

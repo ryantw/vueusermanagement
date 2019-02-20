@@ -86,13 +86,11 @@ const actions = {
     try {
       // gets JWT and expiration time only
       const loginResponse = await api.loginUser(loginRequest)
-      console.log(loginResponse)
       // add token to localStorage
       localStorage.setItem('token', loginResponse.data.access_token)
       dispatch('Activity/setLoggedin', loginResponse.data)
-      console.log(loginResponse)
     } catch (e) {
-      console.log('login failed: ', e)
+      dispatch('showSnackbar', { text: `Failed to login: ${e.message}`, type: 'error' }, { root: true })
       throw e
     } finally {
       dispatch('setIsLoading', false, { root: true })

@@ -11,25 +11,11 @@
             xs12
             md4
           >
-            <v-text-field
-              id="emailAddress"
-              v-model="user.emailAddress"
-              label="Email Address"
-              type="text"
-              autocomplete="username email"
-              name="emailAddress"
-              class="form-control"
-              :rules="[rules.required, rules.email, rules.length255]"
-            />
-            <v-text-field
-              id="password"
-              v-model="user.password"
-              label="Password"
-              type="password"
-              autocomplete="current-password"
-              name="password"
-              class="form-control"
-              :rules="[rules.required, rules.length255]"
+            <login-form
+              :email="email"
+              :password="password"
+              @emailChanged="user.email = value"
+              @passwrodChanged="user.password = value"
             />
             <v-btn
               color="success"
@@ -46,7 +32,7 @@
 
 <script>
 import UserLoginRequest from '@/models/requests/UserLoginRequest'
-import ValidationRules from '@/utils/ValidationRules'
+
 export default {
   data () {
     return {
@@ -54,8 +40,7 @@ export default {
         emailAddress: '',
         password: ''
       },
-      loginErrors: false,
-      rules: ValidationRules
+      loginErrors: false
     }
   },
   methods: {
@@ -68,7 +53,8 @@ export default {
         const loginResponse = await this.$store.dispatch('User/login', userLoginRequest)
         console.log(loginResponse)
       } catch (e) {
-        this.$store.dispatch('addMessage', { message: 'Log in failed.', type: 'error' })
+        // handled by snackbar now
+        // this.$store.dispatch('addMessage', { message: 'Log in failed.', type: 'error' })
         this.loginErrors = true
       }
     }

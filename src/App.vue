@@ -8,6 +8,7 @@
         <router-view />
       </v-container>
     </div>
+    <the-snackbar />
   </v-app>
 </template>
 
@@ -15,12 +16,14 @@
 import Header from '@/components/Header.vue'
 import Loading from '@/components/Loading.vue'
 import Banner from '@/components/Banner.vue'
+import TheSnackbar from '@/components/TheSnackbar.vue'
 
 export default {
   components: {
     appHeader: Header,
     appBanner: Banner,
-    Loading
+    Loading,
+    TheSnackbar
   },
   computed: {
     isLoading () {

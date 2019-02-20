@@ -1,4 +1,9 @@
+let api = {}
+
 const actions = {
+  initStore ({ commit }, options) {
+    api = options.api
+  },
   setIsLoading ({ commit }, isLoading) {
     commit('setIsLoading', isLoading)
   },
@@ -16,6 +21,23 @@ const actions = {
   },
   logout ({ dispatch }) {
     dispatch('User/logout')
+  },
+  async getTenants ({ commit }) {
+    try {
+      const response = await api.getTenants()
+      commit('setTenants', response.data)
+    } catch (e) {
+      console.log('failed to fetch tenants', e)
+    }
+  },
+  setSelectedTenantIndex ({ commit }, value) {
+    commit('setSelectedTenantIndex', value)
+  },
+  showSnackbar ({ commit }, text) {
+    commit('showSnackbar', text)
+  },
+  hideSnackbar ({ commit }) {
+    commit('hideSnackbar')
   }
 }
 
