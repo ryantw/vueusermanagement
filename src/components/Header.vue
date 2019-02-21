@@ -20,11 +20,18 @@
         Users
       </v-btn>
       <v-btn
+        v-if="!isLoggedIn"
         flat
         class=""
         @click="showLoginDialog = true"
       >
         Login
+      </v-btn>
+      <v-btn
+        v-else
+        flat
+      >
+        {{ user.username }}
       </v-btn>
     </v-toolbar-items>
     <v-toolbar-side-icon
@@ -47,6 +54,14 @@ export default {
   data () {
     return {
       showLoginDialog: false
+    }
+  },
+  computed: {
+    isLoggedIn () {
+      return this.user !== null
+    },
+    user () {
+      return this.$store.getters.user
     }
   },
   methods: {
