@@ -68,9 +68,12 @@
 
 <script>
 import YesNoDialog from '@/components/YesNoDialog.vue'
-export default {
+const UserList = {
   components: {
     YesNoDialog
+  },
+  metaInfo: {
+    title: 'User List'
   },
   data () {
     return {
@@ -112,4 +115,6 @@ export default {
     }
   }
 }
+
+export default UserList
 </script>

@@ -71,12 +71,15 @@
 import UserUpdateRequest from '@/models/requests/UserUpdateRequest'
 import ValidationRules from '@/utils/ValidationRules'
 
-export default {
+const UserEdit = {
   props: {
     id: {
       type: [Number, String],
       required: true
     }
+  },
+  metaInfo: {
+    title: `Edit User ${this.id}`
   },
   data () {
     return {
@@ -141,4 +144,6 @@ export default {
     }
   }
 }
+
+export default UserEdit
 </script>

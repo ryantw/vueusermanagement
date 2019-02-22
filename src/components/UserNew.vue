@@ -75,7 +75,10 @@
 import ValidationRules from '@/utils/ValidationRules'
 import UserAddRequest from '@/models/requests/UserAddRequest'
 
-export default {
+const UserNew = {
+  metaInfo: {
+    title: 'Add New User'
+  },
   data () {
     return {
       user: {
@@ -121,4 +124,6 @@ export default {
     }
   }
 }
+
+export default UserNew
 </script>

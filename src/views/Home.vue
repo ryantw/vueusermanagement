@@ -6,4 +6,11 @@
 </template>
 
 <script>
+const Home = {
+  metaInfo: {
+    title: 'Home'
+  }
+}
+
+export default Home
 </script>

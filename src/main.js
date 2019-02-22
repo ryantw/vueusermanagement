@@ -1,5 +1,6 @@
 import Vue from 'vue'
-import './plugins/vuetify'
+
+import './plugins'
 import App from './App.vue'
 import router from './router'
 import store from './store'
@@ -32,7 +33,21 @@ new Vue({
     })
   },
   mounted () {
-    this.$store.dispatch('getTenants')
+    this.getTenantsAndSetDefaultTenant()
+  },
+  methods: {
+    async getTenantsAndSetDefaultTenant () {
+      await this.$store.dispatch('getTenants')
+      const tenants = this.$store.getters.tenants
+
+      if (!tenants.length) return
+
+      const lastSelectedTenantId = localStorage.getItem('tenantId')
+
+      const lastSelectedIndex = tenants.findIndex((t) => t.id === lastSelectedTenantId) | 0
+
+      this.$store.dispatch('setSelectedTenantIndex', lastSelectedIndex)
+    }
   },
   render: h => h(App)
 }).$mount('#app')

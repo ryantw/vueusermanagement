@@ -34,6 +34,9 @@ const LoginForm = {
   components: {
     TenantSelector
   },
+  metaInfo: {
+    title: 'Login'
+  },
   data () {
     return {
       rules: ValidationRules
