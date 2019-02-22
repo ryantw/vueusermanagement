@@ -19,8 +19,13 @@ const actions = {
   setSelectedMessageIndex ({ commit }, index) {
     commit('setSelectedMessageIndex', index)
   },
-  logout ({ dispatch }) {
-    dispatch('User/logout')
+  logout ({ commit }) {
+    localStorage.removeItem('user')
+    localStorage.removeItem('token')
+    commit('setUser', null)
+
+    // need to clear users
+    commit('User/setUsers', [])
   },
   async getTenants ({ commit }) {
     try {

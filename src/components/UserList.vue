@@ -97,7 +97,6 @@ const UserList = {
     }
   },
   created () {
-    this.getUsers()
   },
   methods: {
     async deleteUser (id) {
@@ -112,6 +111,13 @@ const UserList = {
       if (!response) return
 
       await this.$store.dispatch('User/deleteUser', this.selectedUser.id)
+    }
+  },
+  watch: {
+    user () {
+      if (this.user != null) {
+        this.getUsers()
+      }
     }
   }
 }

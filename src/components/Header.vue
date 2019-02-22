@@ -27,12 +27,25 @@
       >
         Login
       </v-btn>
-      <v-btn
+      <v-menu
         v-else
-        flat
+        bottom
+        left
       >
-        {{ user.username }}
-      </v-btn>
+        <v-btn
+          slot="activator"
+          flat
+        >
+          {{ user.username }}
+        </v-btn>
+        <div>
+          <v-btn
+            @click="logout"
+          >
+            Logout
+          </v-btn>
+        </div>
+      </v-menu>
     </v-toolbar-items>
     <v-toolbar-side-icon
       class="hidden-md-and-up"
@@ -67,6 +80,9 @@ export default {
   methods: {
     handleCloseLoginDialog () {
       this.showLoginDialog = false
+    },
+    logout () {
+      this.$store.dispatch('logout')
     }
   }
 }
