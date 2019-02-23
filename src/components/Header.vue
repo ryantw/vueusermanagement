@@ -1,5 +1,7 @@
 <template>
-  <v-toolbar>
+  <v-toolbar
+    color="cyan accent-2"
+  >
     <v-toolbar-title>
       <v-btn
         flat

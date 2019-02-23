@@ -7,6 +7,8 @@ import store from './store'
 import './registerServiceWorker'
 
 import { UserApi, TenantApi } from './api'
+
+import './styles/index.scss'
 // import MockApi from './api/mockApi'
 
 // const mockApi = String(process.env.VUE_APP_MOCK_API) === 'true'

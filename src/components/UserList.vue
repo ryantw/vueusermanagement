@@ -1,62 +1,68 @@
 <template>
   <div>
     <h1>Users</h1>
-    <p>
-      <v-btn
-        color="primary"
-        :to="{name: 'userNew'}"
-      >
-        Add New User
-      </v-btn>
-      <v-btn
-        color="secondary"
-        @click="getUsers()"
-      >
-        Refresh
-      </v-btn>
-    </p>
-    <div v-if="users.length > 0">
-      <v-data-table
-        :headers="headers"
-        :items="users"
-      >
-        <template
-          slot="items"
-          slot-scope="props"
+    <div v-if="user">
+      <p>Modifiy users for your tenant on this page.</p>
+      <p>
+        <v-btn
+          color="primary"
+          :to="{name: 'userNew'}"
         >
-          <td>{{ props.item.id }}</td>
-          <td>{{ props.item.firstName }}</td>
-          <td>{{ props.item.lastName }}</td>
-          <td>{{ props.item.emailAddress }}</td>
-          <td>
-            <div
-              v-for="authority in props.item.authorities"
-              :key="authority.authority"
-            >
-              {{ authority.authority }}
-            </div>
-          </td>
-          <td>
-            <v-btn
-              color="success"
-              tag="a"
-              :to="{ name: 'userEdit', params: { id: props.item.id }}"
-            >
-              Edit
-            </v-btn>
-            <v-btn
-              color="error"
-              href=""
-              @click="deleteUser(props.item.id)"
-            >
-              Delete
-            </v-btn>
-          </td>
-        </template>
-      </v-data-table>
+          Add New User
+        </v-btn>
+        <v-btn
+          color="secondary"
+          @click="fetchUsers()"
+        >
+          Refresh
+        </v-btn>
+      </p>
+      <div v-if="users.length > 0">
+        <v-data-table
+          :headers="headers"
+          :items="users"
+        >
+          <template
+            slot="items"
+            slot-scope="props"
+          >
+            <td>{{ props.item.id }}</td>
+            <td>{{ props.item.firstName }}</td>
+            <td>{{ props.item.lastName }}</td>
+            <td>{{ props.item.email }}</td>
+            <td>
+              <div
+                v-for="authority in props.item.authorities"
+                :key="authority.authority"
+              >
+                {{ authority.authority }}
+              </div>
+            </td>
+            <td>
+              <v-btn
+                color="success"
+                tag="a"
+                :to="{ name: 'userEdit', params: { id: props.item.id }}"
+              >
+                Edit
+              </v-btn>
+              <v-btn
+                color="error"
+                href=""
+                @click="deleteUser(props.item.id)"
+              >
+                Delete
+              </v-btn>
+            </td>
+          </template>
+        </v-data-table>
+      </div>
+      <div v-else>
+        <p>No users.</p>
+      </div>
     </div>
     <div v-else>
-      <p>No users.</p>
+      Please log in to edit your users.
     </div>
     <yes-no-dialog
       v-model="showDialog"
@@ -103,7 +109,7 @@ const UserList = {
       this.selectedUser = await this.$store.dispatch('User/getUser', id)
       this.showDialog = true
     },
-    async getUsers () {
+    async fetchUsers () {
       await this.$store.dispatch('User/getUsers')
     },
     async handleDialogResponse (response) {
@@ -114,9 +120,12 @@ const UserList = {
     }
   },
   watch: {
-    user () {
-      if (this.user != null) {
-        this.getUsers()
+    user: {
+      immediate: true,
+      handler (newUserValue, oldUserValue) {
+        if (newUserValue != null) {
+          this.fetchUsers()
+        }
       }
     }
   }

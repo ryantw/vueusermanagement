@@ -45,3 +45,12 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.banner-container {
+  .v-alert {
+    margin: 0;
+    padding: 0 1em;
+  }
+}
+</style>
