@@ -11,46 +11,17 @@
       </v-btn>
     </v-toolbar-title>
     <v-spacer />
-    <v-toolbar-items>
-      <v-btn
-        flat
-        to="/users"
-        tag="a"
-        active-class="active"
-        class="hidden-sm-and-down"
-      >
-        Users
-      </v-btn>
-      <v-btn
-        v-if="!isLoggedIn"
-        flat
-        class=""
-        @click="showLoginDialog = true"
-      >
-        Login
-      </v-btn>
-      <v-menu
-        v-else
-        bottom
-        left
-      >
-        <v-btn
-          slot="activator"
-          flat
-        >
-          {{ user.username }}
-        </v-btn>
-        <div>
-          <v-btn
-            @click="logout"
-          >
-            Logout
-          </v-btn>
-        </div>
-      </v-menu>
-    </v-toolbar-items>
-    <v-toolbar-side-icon
-      class="hidden-md-and-up"
+    <link-list
+      class="hidden-xs-only"
+      :user="user"
+      @login="showLoginDialog = true"
+      @logout="logout"
+    />
+    <mobile-link-list
+      class="hidden-sm-and-up"
+      :user="user"
+      @login="showLoginDialog = true"
+      @logout="logout"
     />
     <login-dialog
       v-model="showLoginDialog"
@@ -61,10 +32,14 @@
 
 <script>
 import LoginDialog from '@/components/login/LoginDialog.vue'
+import LinkList from '@/components/header/LinkList.vue'
+import MobileLinkList from '@/components/header/MobileLinkList.vue'
 
 export default {
   components: {
-    LoginDialog
+    LoginDialog,
+    LinkList,
+    MobileLinkList
   },
   data () {
     return {
