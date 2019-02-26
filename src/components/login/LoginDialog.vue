@@ -69,6 +69,11 @@ export default {
     async handleSubmit () {
       try {
         await this.$store.dispatch('User/login', new UserLoginRequest(this.email, this.password))
+        if (this.$route.query.reroute) {
+          const decodedUri = decodeURI(this.$route.query.reroute)
+          const path = { path: `${decodedUri}` }
+          this.$router.push(path)
+        }
         this.$emit('close')
       } catch (e) {
         // login failed

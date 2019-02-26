@@ -63,7 +63,6 @@ router.beforeEach((to, from, next) => {
   const user = store.getters.user
   if (!user) {
     // redirect to login page
-    console.log(to)
     next({ name: 'login', query: { reroute: to.path } })
     return
   }
