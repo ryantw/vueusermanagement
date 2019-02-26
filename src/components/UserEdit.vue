@@ -46,11 +46,11 @@
             md4
           >
             <v-text-field
-              id="emailAddress"
-              v-model="user.emailAddress"
+              id="email"
+              v-model="user.email"
               label="Email Address"
               type="text"
-              name="emailAddress"
+              name="email"
               class="form-control"
               :rules="[rules.required, rules.email, rules.length255]"
             />
@@ -78,15 +78,17 @@ const UserEdit = {
       required: true
     }
   },
-  metaInfo: {
-    title: `Edit User ${this.id}`
+  metaInfo () {
+    return {
+      title: `Edit User ${this.id}`
+    }
   },
   data () {
     return {
       user: {
         firstName: '',
         lastName: '',
-        emailAddress: '',
+        email: '',
         role: ''
       },
       userSaving: false,
@@ -114,7 +116,7 @@ const UserEdit = {
         this.id,
         this.user.firstName,
         this.user.lastName,
-        this.user.emailAddress
+        this.user.email
       )
       try {
         await this.$store.dispatch('User/updateUser', userUpdateRequest)
