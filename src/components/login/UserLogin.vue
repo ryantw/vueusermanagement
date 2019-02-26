@@ -14,8 +14,8 @@
             <login-form
               :email="email"
               :password="password"
-              @emailChanged="user.email = value"
-              @passwrodChanged="user.password = value"
+              @emailChanged="handleEmailChanged"
+              @passwordChanged="handlePasswordChanged"
             />
             <v-btn
               color="success"
@@ -32,31 +32,44 @@
 
 <script>
 import UserLoginRequest from '@/models/requests/UserLoginRequest'
+import LoginForm from '@/components/login/LoginForm.vue'
 
 export default {
+  components: {
+    LoginForm
+  },
   data () {
     return {
-      user: {
-        emailAddress: '',
-        password: ''
-      },
+      email: '',
+      password: '',
       loginErrors: false
     }
   },
   methods: {
     async loginUser () {
       const userLoginRequest = new UserLoginRequest(
-        this.emailAddress,
+        this.email,
         this.password
       )
       try {
-        const loginResponse = await this.$store.dispatch('User/login', userLoginRequest)
-        console.log(loginResponse)
+        await this.$store.dispatch('User/login', userLoginRequest)
+
+        if (this.$route.query.reroute) {
+          const decodedUri = decodeURI(this.$route.query.reroute)
+          const path = { path: `${decodedUri}` }
+          this.$router.push(path)
+        }
       } catch (e) {
         // handled by snackbar now
         // this.$store.dispatch('addMessage', { message: 'Log in failed.', type: 'error' })
         this.loginErrors = true
       }
+    },
+    handlePasswordChanged (value) {
+      this.password = value
+    },
+    handleEmailChanged (value) {
+      this.email = value
     }
   }
 }

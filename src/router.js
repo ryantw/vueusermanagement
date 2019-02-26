@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import store from './store'
 
 Vue.use(Router)
 
@@ -11,7 +12,7 @@ function loadComponent (component, path = './components/') {
   return () => import(/* webpackChunkName: "component-[request]" */ `${path}${component}.vue`)
 }
 
-export default new Router({
+const router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
@@ -23,23 +24,50 @@ export default new Router({
     {
       path: '/users',
       name: 'users',
+      meta: {
+        auth: true
+      },
       component: loadComponent('UserList')
     },
     {
       path: '/users/edit/:id',
       name: 'userEdit',
       component: loadComponent('UserEdit'),
+      meta: {
+        auth: true
+      },
       props: true
     },
     {
       path: '/users/new',
       name: 'userNew',
+      meta: {
+        auth: true
+      },
       component: loadComponent('UserNew')
     },
     {
       path: '/login',
-      name: 'userLogin',
-      component: loadComponent('UserLogin', './components/login')
+      name: 'login',
+      component: loadComponent('UserLogin', './components/login/')
     }
   ]
 })
+
+router.beforeEach((to, from, next) => {
+  if (!to.meta.auth) {
+    next()
+    return
+  }
+
+  const user = store.getters.user
+  if (!user) {
+    // redirect to login page
+    console.log(to)
+    next({ name: 'login', query: { reroute: to.path } })
+    return
+  }
+  next()
+})
+
+export default router
